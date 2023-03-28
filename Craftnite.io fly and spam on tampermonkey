@@ -1,0 +1,187 @@
+// ==UserScript==
+// @name         Craftnite.io cheat
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://craftnite.io/
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=craftnite.io
+// @grant        none
+// ==/UserScript==
+
+//You must set it on tampermonkey for use it.
+
+(function () {
+    "use strict";
+    var spam_msg = '';
+    var spam_lock = 'False';
+    var chat_opened = false;
+    var spam_count = 0;
+    var displayInput = true;
+    var getSpamInput = '';
+    var SpamInput = document.createElement("input");
+    var ValidButton1 = document.createElement("button");
+    var divClass = document.createElement('div');
+    var ExplainText = document.createElement('p');
+    var ExplainText2 = document.createElement('p');
+    document.getElementById("craftnite-io_300x250").remove();
+    document.getElementById("cross-promo").remove();
+    var FlyEnabled = false
+    divClass.style.display = 'block';
+    divClass.id = "MyDIV";
+    document.body.appendChild(divClass);
+    function changeColorAtHover(button, color, returncolor) {
+        $(document).ready(function () {
+            $(button).hover(function () {
+                $(button).css('background', color);
+            },
+                function () {
+                    $(button).css('background', returncolor);
+                });
+        });
+    }
+    function modifyHTML() {
+        ValidButton1.innerHTML = "valid"
+        ExplainText.innerHTML = "To spam, you must activate the spam button and then hold the 'enter' key for as long as you want."
+        ExplainText2.innerHTML = "This script was made by Raylazzz and was published by Raylazzz, so for those who would like to use it, please respect me in the game, at least in recognition of my work. 😂"
+        ExplainText.style = "background-color: white; width: 300px; right: 15px ; color: black; border-radius: 15px; border-color: black; padding: 15px; position: absolute; z-index: 100;"
+        ExplainText2.style = "background-color: white; width: 300px; top: 95px; right: 15px ; color: black; border-radius: 15px; border-color: black; padding: 15px; position: absolute; z-index: 100;"
+        SpamInput.className = 'Spam input';
+        SpamInput.placeholder = "Spam message...";
+        ValidButton1.style = "top:15px;left:230px;position:absolute;z-index:99999;padding:15px;cursor: pointer;border-radius: 15px 15px 15px 15px;";
+        SpamInput.style = "top:15px;left:15px;position:absolute;z-index:99999;padding:15px;border-radius: 15px 15px 15px 15px;";
+        ValidButton1.onclick = "myFunction()";
+        ValidButton1.style.backgroundColor = "white";
+        changeColorAtHover(ValidButton1, '#05d1ff', 'white');
+        ValidButton1.style.backgroundColor = "white";
+        document.getElementById('MyDIV').appendChild(ExplainText2);
+        document.getElementById("MyDIV").appendChild(ExplainText);
+        document.getElementById('MyDIV').appendChild(SpamInput);
+        document.getElementById('MyDIV').appendChild(ValidButton1);
+        document.getElementById('MyDIV').removeChild(SpamInput);
+        getSpamInput = SpamInput.value;
+        spam_msg = getSpamInput;
+        console.log(getSpamInput);
+        displayInput = false;
+        ValidButton1.innerHTML = "change spam message"
+        ValidButton1.style = "top:15px;left:15px;position:absolute;z-index:99999;padding:15px;cursor: pointer;border-radius: 15px 15px 15px 15px;";
+        ValidButton1.style.backgroundColor = "white";
+    }
+    function HTMLButtonSpam() {
+        ValidButton1.onclick = function () {
+            if (displayInput == true) {
+                document.getElementById('MyDIV').removeChild(SpamInput);
+                getSpamInput = SpamInput.value;
+                spam_msg = getSpamInput;
+                console.log(getSpamInput);
+                displayInput = false;
+                ValidButton1.innerHTML = "change spam message"
+                ValidButton1.style = "top:15px;left:15px;position:absolute;z-index:99999;padding:15px;cursor: pointer;border-radius: 15px 15px 15px 15px;";
+                ValidButton1.style.backgroundColor = "white";
+            } else if (displayInput == false) {
+                ValidButton1.style = "top:15px;left:230px;position:absolute;z-index:99999;padding:15px;cursor: pointer;border-radius: 15px 15px 15px 15px;";
+                document.getElementById('MyDIV').appendChild(SpamInput);
+                ValidButton1.innerHTML = "submit"
+                document.getElementById('MyDIV').appendChild(ValidButton1);
+                displayInput = true;
+            }
+        };
+    }
+    function keyboardManagement() {
+        document.onkeydown = function (m) {
+            if (m.key == "Enter") {
+                if (chat_opened == false) {
+                    chat_opened = true;
+                } else if (chat_opened == true) {
+                    chat_opened = false;
+                }
+                if (spam_lock == 'True') {
+                    var elt = document.querySelector('input');
+                    elt.value = '' + spam_count + ' ' + spam_msg;
+                } else {
+                    null;
+                }
+            }
+            if (chat_opened == true) {
+                spam_count++
+            }
+            if (FlyEnabled == true) {
+                G.CONFIG.a143 = 100
+            } else if (FlyEnabled == false) {
+                G.CONFIG.a143 = 0
+            }
+        }
+    }
+    function HTMLlabels() {
+        var HTMLLabelsButton1 = document.createElement('button');
+        var HTMLLabelsButton1Checked = false
+        HTMLLabelsButton1.innerHTML = 'En/Disable Fly Mode ✖';
+        HTMLLabelsButton1.style = "top:75px;left:15px;position:absolute;z-index:99999;padding:15px;cursor: pointer;border-radius: 15px 15px 15px 15px;";
+        changeColorAtHover(HTMLLabelsButton1, '#05d1ff', 'white');
+        HTMLLabelsButton1.onclick = function () {
+            if (HTMLLabelsButton1Checked == true) {
+                changeColorAtHover(HTMLLabelsButton1, '#05d1ff', "white");
+                HTMLLabelsButton1.innerHTML = 'En/Disable Fly Mode ✖';
+                G.CONFIG.a143 = 0
+                FlyEnabled = false
+                HTMLLabelsButton1Checked = false;
+            } else if (HTMLLabelsButton1Checked == false) {
+                changeColorAtHover(HTMLLabelsButton1, '#05d1ff', '#05d1ff');
+                HTMLLabelsButton1.innerHTML = 'En/Disable Fly Mode ✔';
+                G.CONFIG.a143 = 100
+                FlyEnabled = true
+                HTMLLabelsButton1Checked = true;
+            }
+        }
+        document.getElementById('MyDIV').appendChild(HTMLLabelsButton1);
+        var HTMLLabelsButton2 = document.createElement('button');
+        var HTMLLabelsButton2Checked = false
+        HTMLLabelsButton2.innerHTML = 'En/Disable Spam Mode ✖';
+        HTMLLabelsButton2.style = "top:135px;left:15px;position:absolute;z-index:99999;padding:15px;cursor: pointer;border-radius: 15px 15px 15px 15px;";
+        changeColorAtHover(HTMLLabelsButton2, '#05d1ff', 'white');
+        HTMLLabelsButton2.onclick = function () {
+            spam_count = 0;
+            if (HTMLLabelsButton2Checked == true) {
+                changeColorAtHover(HTMLLabelsButton2, '#05d1ff', "white");
+                HTMLLabelsButton2.innerHTML = 'En/Disable Spam Mode ✖';
+                HTMLLabelsButton2Checked = false;
+            } else if (HTMLLabelsButton2Checked == false) {
+                changeColorAtHover(HTMLLabelsButton2, '#05d1ff', '#05d1ff');
+                HTMLLabelsButton2.innerHTML = 'En/Disable Spam Mode ✔';
+                HTMLLabelsButton2Checked = true;
+            }
+            if (spam_lock == 'True') {
+                spam_lock = 'False';
+            } else if (spam_lock == 'False') {
+                spam_lock = 'True';
+            }
+        }
+        document.getElementById('MyDIV').appendChild(HTMLLabelsButton2);
+    }
+    function hideButtonsButton() {
+        var HTMLLabelsButton3 = document.createElement('button');
+        var HTMLLabelsButton3Checked = false
+        HTMLLabelsButton3.innerHTML = '⬅';
+        HTMLLabelsButton3.style = "top:320px;height: 100px ;left:15px;position:absolute;z-index:99999;padding:15px;cursor: pointer;border-radius: 15px 15px 15px 15px;";
+        HTMLLabelsButton3.onclick = function () {
+            if (HTMLLabelsButton3Checked == true) {
+                divClass.style.display = 'block';
+                changeColorAtHover(HTMLLabelsButton3, '#05d1ff', 'white');
+                HTMLLabelsButton3.innerHTML = '⬅';
+                HTMLLabelsButton3Checked = false
+            } else if (HTMLLabelsButton3Checked == false) {
+                divClass.style.display = 'none';
+                changeColorAtHover(HTMLLabelsButton3, '#05d1ff', '#05d1ff');
+                HTMLLabelsButton3.innerHTML = '➡';
+                HTMLLabelsButton3Checked = true
+            }
+        }
+        document.body.appendChild(HTMLLabelsButton3);
+
+    }
+    modifyHTML();
+    HTMLlabels();
+    HTMLButtonSpam();
+    hideButtonsButton();
+    keyboardManagement();
+})();
